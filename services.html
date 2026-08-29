@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYBER SERVICES | TERMINAL ACCESS</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        body { 
+            background-color: #000000; 
+            color: #00e676; 
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        /* Matrix Animation Canvas */
+        canvas {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+        }
+
+        /* Access Terminal Window */
+        .login-box, .services-content {
+            position: relative;
+            z-index: 2;
+            background: rgba(10, 12, 16, 0.95);
+            padding: 30px 25px;
+            border-radius: 12px;
+            border: 2px solid #00e676;
+            box-shadow: 0 0 25px rgba(0, 230, 118, 0.3);
+            width: 90%;
+            max-width: 380px;
+            text-align: center;
+        }
+
+        .login-box h2 { 
+            font-size: 1.4rem; 
+            margin-bottom: 8px; 
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px #00e676;
+        }
+
+        .login-box p { 
+            color: #8b949e; 
+            font-size: 0.8rem; 
+            margin-bottom: 20px; 
+        }
+
+        .input-group { 
+            margin-bottom: 15px; 
+            text-align: left; 
+        }
+
+        .input-group label { 
+            display: block; 
+            font-size: 0.8rem; 
+            margin-bottom: 5px; 
+            color: #00e676;
+            font-weight: bold;
+        }
+
+        .input-group input {
+            width: 100%; 
+            padding: 12px;
+            background: #05070a; 
+            border: 1px solid #00e676;
+            border-radius: 6px; 
+            color: #fff; 
+            text-align: center;
+            font-family: monospace; 
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .input-group input:focus {
+            box-shadow: 0 0 12px rgba(0, 230, 118, 0.6);
+        }
+
+        .btn-access {
+            width: 100%; 
+            padding: 12px;
+            background: #00e676; 
+            color: #000;
+            border: none; 
+            font-weight: bold; 
+            border-radius: 6px;
+            cursor: pointer; 
+            font-size: 1rem; 
+            margin-top: 10px;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .btn-access:hover {
+            background: #00b359;
+            box-shadow: 0 0 15px #00e676;
+        }
+
+        #msg { 
+            margin-top: 15px; 
+            font-size: 0.85rem; 
+            font-weight: bold; 
+        }
+
+        .back-link { 
+            display: inline-block; 
+            margin-top: 15px; 
+            color: #8b949e; 
+            text-decoration: none; 
+            font-size: 0.8rem; 
+            transition: 0.3s;
+        }
+        .back-link:hover { color: #fff; }
+
+        /* Card Section */
+        .services-content { display: none; text-align: left; }
+
+        .card-box {
+            background: linear-gradient(135deg, #161b22, #0d1117);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #30363d;
+            margin-top: 15px;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+            position: relative;
+        }
+
+        .card-title {
+            font-size: 0.75rem;
+            color: #8b949e;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .card-number {
+            color: #00e676;
+            font-size: 1.25rem;
+            font-weight: bold;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            text-shadow: 0 0 8px rgba(0, 230, 118, 0.4);
+        }
+
+        .card-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-val {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .warning-box {
+            color: #ff5252;
+            background: rgba(255, 82, 82, 0.1);
+            border: 1px solid #ff5252;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+            line-height: 1.4;
+        }
+
+        #timer {
+            font-size: 0.9rem;
+            color: #ff5252;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Animation -->
+    <canvas id="matrix"></canvas>
+
+    <!-- Login Form Terminal -->
+    <div class="login-box" id="loginBox">
+        <h2>[ SYSTEM ACCESS ]</h2>
+        <p>Enter valid Key & Password to unlock service data</p>
+
+        <div class="input-group">
+            <label>ACCESS KEY:</label>
+            <input type="text" id="userKey" placeholder="e.g. SPAM-VIP" autocomplete="off">
+        </div>
+
+        <div class="input-group">
+            <label>PASSWORD:</label>
+            <input type="password" id="userPass" placeholder="••••••••">
+        </div>
+
+        <button class="btn-access" onclick="checkAccess()">VERIFY & UNLOCK</button>
+        <p id="msg"></p>
+        <a href="index.html" class="back-link">← Return to Main Page</a>
+    </div>
+
+    <!-- Data Display Terminal -->
+    <div class="services-content" id="servicesContent">
+        <h3 style="color: #00e676; text-align: center; letter-spacing: 2px;">[ ACCESS GRANTED ]</h3>
+        
+        <div class="card-box">
+            <div class="card-title">Virtual Card Number</div>
+            <div class="card-number">5477 9678 9683 1039</div>
+
+            <div class="card-flex">
+                <div>
+                    <div class="card-title">EXP DATE</div>
+                    <div class="card-val">11/29</div>
+                </div>
+                <div>
+                    <div class="card-title">CVC / CVV</div>
+                    <div class="card-val">901</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="warning-box">
+            IMPORTANT NOTICE:<br>
+            This card details will expire in <span id="timer">05:00</span> minutes!
+        </div>
+
+        <a href="index.html" class="back-link" style="display: block; text-align: center; margin-top: 15px;">← Exit Session</a>
+    </div>
+
+    <script>
+        // Matrix Rain Background
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const chars = '0101010101010101010101';
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#00e676';
+            ctx.font = fontSize + 'px monospace';
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars.charAt(Math.floor(Math.random() * chars.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 33);
+
+        // Valid Keys Database
+        const validCredentials = {
+            "SPAM-VIP": "ASGI9688",
+            "SPAM-KOP": "HONG9790",
+            "SPAM-HAK": "JGIK5589"
+        };
+
+        function checkAccess() {
+            const keyInput = document.getElementById('userKey').value.trim().toUpperCase();
+            const passInput = document.getElementById('userPass').value.trim();
+            const msg = document.getElementById('msg');
+
+            if (validCredentials[keyInput] && validCredentials[keyInput] === passInput) {
+                msg.style.color = "#00e676";
+                msg.innerHTML = "[ ACCESS GRANTED ] Extracting data...";
+                
+                setTimeout(() => {
+                    document.getElementById('loginBox').style.display = 'none';
+                    document.getElementById('servicesContent').style.display = 'block';
+                    startTimer(300); // 5 Minutes Countdown
+                }, 1000);
+            } else {
+                msg.style.color = "#ff5252";
+                msg.innerHTML = "[ ACCESS DENIED ] Invalid Key or Password!";
+            }
+        }
+
+        // Countdown Timer Function
+        function startTimer(duration) {
+            let timer = duration, minutes, seconds;
+            const display = document.getElementById('timer');
+            const countdown = setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    clearInterval(countdown);
+                    display.textContent = "EXPIRED";
+                    alert("Session expired! The card details are no longer valid.");
+                    window.location.reload();
+                }
+            }, 1000);
+        }
+    </script>
+
+</body>
+</html>
+

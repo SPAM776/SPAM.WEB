@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قسم التطبيقات | SPAM.WEB</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        body { 
+            background-color: #0d0f12; 
+            color: #ffffff; 
+            padding: 20px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #1f2937;
+            padding-bottom: 12px;
+        }
+        .back-btn {
+            color: #00e676;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        h1 {
+            color: #00e676;
+            font-size: 1.4rem;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .app-card { 
+            background: #161b22; 
+            padding: 15px; 
+            border-radius: 12px; 
+            border: 1px solid #30363d; 
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .app-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .app-icon {
+            width: 65px;
+            height: 65px;
+            border-radius: 14px;
+            object-fit: cover;
+            border: 2px solid #00e676;
+        }
+        .app-details h3 {
+            color: #fff;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+        .app-details p {
+            color: #8b949e;
+            font-size: 0.8rem;
+        }
+        .app-stats {
+            display: flex;
+            gap: 12px;
+            color: #00e676;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        .btn-download { 
+            display: block; 
+            width: 100%;
+            text-align: center;
+            padding: 11px 0; 
+            background: #00e676; 
+            color: #000; 
+            font-weight: bold; 
+            text-decoration: none; 
+            border-radius: 8px; 
+            font-size: 0.95rem;
+            cursor: pointer;
+            border: none;
+        }
+
+        /* نافذة الانتظار */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-box {
+            background: #161b22;
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid #00e676;
+            text-align: center;
+            width: 85%;
+            max-width: 320px;
+            box-shadow: 0 0 20px rgba(0, 230, 118, 0.2);
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #21262d;
+            border-top: 5px solid #00e676;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .countdown-text {
+            font-size: 1rem;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .countdown-number {
+            color: #00e676;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>📱 قائمة التطبيقات</h1>
+        <a href="index.html" class="back-btn">← الرئيسية</a>
+    </div>
+
+    <div class="container">
+        <div class="app-card">
+            <div class="app-info">
+                <img src="3079.png" alt="Skin Tools Pro" class="app-icon">
+                <div class="app-details">
+                    <h3>SKIN TOOLS PRO V2</h3>
+                    <p>الحجم: 52 MB</p>
+                    <div class="app-stats">
+                        <span>★ 4.8</span>
+                        <span>📥 +10K</span>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-download" onclick="startDownload('https://www.mediafire.com/file/68jvru5zaaj9rha/com.vcm21.SkinToolsConfigFF-2-0-4-arm64-v8a-android60.apk/file')">تحميل APK</button>
+        </div>
+
+        <div class="app-card">
+            <div class="app-info">
+                <img src="3078.webp" alt="Dark Aura" class="app-icon">
+                <div class="app-details">
+                    <h3>DARK AURA</h3>
+                    <p>الحجم: 10 MB</p>
+                    <div class="app-stats">
+                        <span>★ 4.9</span>
+                        <span>📥 +5K</span>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-download" onclick="startDownload('https://www.mediafire.com/file/0yuet1p0ewolxxs/dark-aura-panel.apk/file')">تحميل APK</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="downloadModal">
+        <div class="modal-box">
+            <div class="spinner"></div>
+            <p class="countdown-text">جاري فحص الملف وتجهيز الرابط...</p>
+            <p class="countdown-text">يرجى الانتظار: <span class="countdown-number" id="timer">10</span> ثانية</p>
+        </div>
+    </div>
+
+    <script>
+        function startDownload(url) {
+            const modal = document.getElementById('downloadModal');
+            const timerElement = document.getElementById('timer');
+            let timeLeft = 10;
+            
+            timerElement.textContent = timeLeft;
+            modal.style.display = 'flex';
+
+            const countdown = setInterval(() => {
+                timeLeft--;
+                timerElement.textContent = timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(countdown);
+                    modal.style.display = 'none';
+                    window.location.href = url;
+                }
+            }, 1000);
+        }
+    </script>
+
+</body>
+</html>
+
