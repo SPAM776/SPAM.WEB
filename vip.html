@@ -3,234 +3,289 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تطبيقات وألعاب مهكرة VIP</title>
+    <title>الوصول إلى النظام - SPAM VIP</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* تصميم شاشة القفل */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #05080c;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* خلفية الأرقام الخضراء النازلة (Matrix Effect) */
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.25;
+        }
+
+        /* واجهة الدخول الاحترافية */
         .login-overlay {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: #090a0f;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 9999;
+            z-index: 10;
             padding: 20px;
-            box-sizing: border-box;
         }
 
         .login-box {
-            background: #12141c;
-            border: 1px solid #00e676;
-            padding: 25px;
-            border-radius: 12px;
+            background: rgba(13, 17, 23, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1.5px solid #00e676;
+            padding: 30px 25px;
+            border-radius: 16px;
             width: 100%;
-            max-width: 350px;
+            max-width: 380px;
             text-align: center;
-            box-shadow: 0 0 15px rgba(0, 230, 118, 0.2);
+            box-shadow: 0 0 25px rgba(0, 230, 118, 0.25);
         }
 
         .login-box h2 {
             color: #00e676;
-            margin-bottom: 20px;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            text-shadow: 0 0 10px rgba(0, 230, 118, 0.5);
+        }
+
+        .login-box p.subtext {
+            color: #8b949e;
+            font-size: 0.9rem;
+            margin-bottom: 22px;
+            line-height: 1.4;
+        }
+
+        .input-group {
+            text-align: right;
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            color: #00e676;
+            font-size: 0.85rem;
+            margin-bottom: 6px;
+            font-weight: bold;
         }
 
         .login-input {
             width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            background: #1a1d28;
-            border: 1px solid #333;
-            color: #fff;
-            border-radius: 6px;
+            padding: 12px 15px;
+            background: #090d16;
+            border: 1px solid #00e676;
+            color: #00e676;
+            border-radius: 8px;
             text-align: center;
-            font-size: 15px;
-            box-sizing: border-box;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .login-input:focus {
+            box-shadow: 0 0 10px rgba(0, 230, 118, 0.4);
         }
 
         .login-btn {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             background: #00e676;
-            color: #000;
+            color: #05080c;
             font-weight: bold;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            margin-top: 15px;
-            font-size: 16px;
+            margin-top: 10px;
+            font-size: 1.05rem;
+            box-shadow: 0 0 15px rgba(0, 230, 118, 0.4);
+            transition: 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background: #00c853;
+            transform: translateY(-2px);
         }
 
         .error-msg {
             color: #ff5252;
-            font-size: 13px;
-            margin-top: 10px;
+            font-size: 0.85rem;
+            margin-top: 12px;
             display: none;
         }
 
-        /* شاشة تأثير الهكرز 10101010 Matrix Effect */
-        #matrixCanvas {
+        /* شاشة التحول الكامل للأرقام الخضراء عند نجاح الكود */
+        #matrixTransition {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
             background: #000;
-            z-index: 9998;
+            z-index: 9999;
             display: none;
+        }
+
+        /* المحتوى المفتوح */
+        #vipContent {
+            position: relative;
+            z-index: 5;
+            display: none;
+            padding: 20px 10px;
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. شاشة تسجيل الدخول والرمز السري -->
+    <!-- خلفية الأرقام المتساقطة الخفيفة -->
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- 1. واجهة تسجيل الدخول والرمز السري -->
     <div class="login-overlay" id="loginOverlay">
         <div class="login-box">
-            <h2>🔒 قسم SPAM-VIP</h2>
-            <input type="text" id="vipCode" class="login-input" placeholder="أدخل الرمز (CODE)">
-            <input type="password" id="vipPass" class="login-input" placeholder="كلمة المرور (PASSWORD)">
-            <button class="login-btn" onclick="checkAccess()">دخول الخانة VIP</button>
-            <p class="error-msg" id="errorMsg">❌ الرمز أو كلمة المرور غير صحيحة!</p>
+            <h2>الوصول إلى النظام</h2>
+            <p class="subtext">أدخل المفتاح وكلمة المرور الصحيحين لفتح بيانات الخدمة</p>
+
+            <div class="input-group">
+                <label>مفتاح الوصول:</label>
+                <input type="text" id="vipCode" class="login-input" placeholder="SPAM-VIP">
+            </div>
+
+            <div class="input-group">
+                <label>كلمة المرور:</label>
+                <input type="password" id="vipPass" class="login-input" placeholder="••••••••">
+            </div>
+
+            <button class="login-btn" onclick="checkAccess()">تحقق وافتح</button>
+            <p class="error-msg" id="errorMsg">❌ مفتاح الوصول أو كلمة المرور غير صحيحة!</p>
         </div>
     </div>
 
-    <!-- 2. الشاشة السوداء والأرقام الخضراء (تأثير سقوط 10101010) -->
-    <canvas id="matrixCanvas"></canvas>
+    <!-- 2. شاشة الانتقال (تأثير سقوط الأرقام الخضراء 101010) -->
+    <canvas id="matrixTransition"></canvas>
 
-    <!-- 3. محتوى التطبيقات المهكرة (مخفي حتى يتم تسجيل الدخول) -->
-    <div id="vipContent" style="display: none;">
-        <header>
-            <div class="navbar">
-                <h2>💀 قسم التطبيقات والألعاب المهكرة</h2>
-                <nav>
-                    <a href="index.html">الرئيسية</a>
-                    <a href="apps.html">قائمة التطبيقات</a>
-                </nav>
-            </div>
+    <!-- 3. قسم التطبيقات والألعاب المهكرة -->
+    <div id="vipContent">
+        <header style="text-align: center; margin-bottom: 25px;">
+            <h1 style="color: #00e676; text-shadow: 0 0 10px rgba(0,230,118,0.5);">🎮 ألعاب وتطبيقات مهكرة VIP</h1>
+            <p style="color: #8b949e;">جميع الألعاب والتطبيقات مهكرة ومفحوصة 100%</p>
         </header>
 
-        <div class="container">
-            <h1 class="page-title">🎮 جميع الأنواع - ألعاب وتطبيقات مهكرة</h1>
+        <div class="container" style="max-width: 500px; margin: auto;">
 
-            <div class="apps-grid">
-
-                <!-- ===== تطبيق رقم 1 ===== -->
-                <div class="app-card">
-                    <img src="XXXXXX.png" alt="XXXXXX" class="app-icon">
-                    <div class="app-info">
-                        <h3>XXXXXX</h3>
-                        <p>الحجم: XX MB</p>
-                    </div>
-                    <button class="download-btn" onclick="openDownloadModal('رابط')">تحديث وتحميل التطبيق</button>
-                </div>
-
-                <!-- ===== تطبيق رقم 2 ===== -->
-                <div class="app-card">
-                    <img src="XXXXXX.png" alt="XXXXXX" class="app-icon">
-                    <div class="app-info">
-                        <h3>XXXXXX</h3>
-                        <p>الحجم: XX MB</p>
-                    </div>
-                    <button class="download-btn" onclick="openDownloadModal('رابط')">تحديث وتحميل التطبيق</button>
-                </div>
-
-                <!-- ===== تطبيق رقم 3 ===== -->
-                <div class="app-card">
-                    <img src="XXXXXX.png" alt="XXXXXX" class="app-icon">
-                    <div class="app-info">
-                        <h3>XXXXXX</h3>
-                        <p>الحجم: XX MB</p>
-                    </div>
-                    <button class="download-btn" onclick="openDownloadModal('رابط')">تحديث وتحميل التطبيق</button>
-                </div>
-
+            <!-- تطبيق رقم 1 -->
+            <div class="card" style="background: rgba(18,20,28,0.9); border: 1px solid #00e676; padding: 20px; border-radius: 12px; margin-bottom: 15px; text-align: center;">
+                <img src="XXXXXX.png" alt="Icon" style="width: 70px; height: 70px; border-radius: 12px; margin-bottom: 10px;">
+                <h3 style="color: #fff; margin-bottom: 5px;">XXXXXX</h3>
+                <p style="color: #8b949e; font-size: 0.9rem; margin-bottom: 15px;">الحجم: XX MB | مهكرة بالكامل</p>
+                <button class="login-btn" onclick="openDownloadModal('رابط')">تحميل التطبيق</button>
             </div>
+
+            <!-- تطبيق رقم 2 -->
+            <div class="card" style="background: rgba(18,20,28,0.9); border: 1px solid #00e676; padding: 20px; border-radius: 12px; margin-bottom: 15px; text-align: center;">
+                <img src="XXXXXX.png" alt="Icon" style="width: 70px; height: 70px; border-radius: 12px; margin-bottom: 10px;">
+                <h3 style="color: #fff; margin-bottom: 5px;">XXXXXX</h3>
+                <p style="color: #8b949e; font-size: 0.9rem; margin-bottom: 15px;">الحجم: XX MB | مهكرة بالكامل</p>
+                <button class="login-btn" onclick="openDownloadModal('رابط')">تحميل التطبيق</button>
+            </div>
+
+            <!-- تطبيق رقم 3 -->
+            <div class="card" style="background: rgba(18,20,28,0.9); border: 1px solid #00e676; padding: 20px; border-radius: 12px; margin-bottom: 15px; text-align: center;">
+                <img src="XXXXXX.png" alt="Icon" style="width: 70px; height: 70px; border-radius: 12px; margin-bottom: 10px;">
+                <h3 style="color: #fff; margin-bottom: 5px;">XXXXXX</h3>
+                <p style="color: #8b949e; font-size: 0.9rem; margin-bottom: 15px;">الحجم: XX MB | مهكرة بالكامل</p>
+                <button class="login-btn" onclick="openDownloadModal('رابط')">تحميل التطبيق</button>
+            </div>
+
         </div>
     </div>
 
-    <!-- نافذة الانتظار الإعلانية -->
-    <div class="modal-overlay" id="downloadModal">
-        <div class="modal-box">
-            <div class="spinner"></div>
-            <p class="countdown-text">جاري فحص الملف وتجهيز الرابط...</p>
-
-            <div class="ad-area">
+    <!-- نافذة الإعلان والتحميل -->
+    <div class="modal-overlay" id="downloadModal" style="display:none;">
+        <div class="modal-box" style="background:#12141c; border:1px solid #00e676; padding:20px; border-radius:12px; text-align:center;">
+            <p style="color:#00e676;">جاري تحضير رابط التحميل المباشر...</p>
+            <div class="ad-area" style="margin:15px 0;">
                 <script async="async" data-cfasync="false" src="https://pl21151086.profitablecpmnetwork.com/8ddb5471c114c257a75fcf759da7fdd4/invoke.js"></script>
                 <div id="container-8ddb5471c114c257a75fcf759da7fdd4"></div>
             </div>
-
-            <p class="countdown-text">يرجى الانتظار: <span class="countdown-number" id="timer">10</span> ثانية</p>
+            <p>يرجى الانتظار: <span id="timer" style="color:#00e676; font-weight:bold;">10</span> ثانية</p>
         </div>
     </div>
 
     <script src="script.js"></script>
 
-    <!-- سكريبت التحقق وأنيميشن Matrix (10101010) -->
+    <!-- سكريبت التأثير والتحقق -->
     <script>
-        function checkAccess() {
-            var code = document.getElementById("vipCode").value;
-            var pass = document.getElementById("vipPass").value;
-            var error = document.getElementById("errorMsg");
-
-            // الرمز وكلمة المرور المطلوبة
-            if (code === "SPAM-VIP" && pass === "SFIN7474") {
-                error.style.display = "none";
-                document.getElementById("loginOverlay").style.display = "none";
-                
-                // تشغيل الشاشة السوداء بالأرقام الخضراء 10101010
-                startMatrixAnimation();
-            } else {
-                error.style.display = "block";
-            }
-        }
-
-        function startMatrixAnimation() {
-            var canvas = document.getElementById("matrixCanvas");
+        // أنيميشن Matrix للخلفية
+        function createMatrixBg(canvasId, speed) {
+            var canvas = document.getElementById(canvasId);
             var ctx = canvas.getContext("2d");
-
-            canvas.style.display = "block";
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
 
             var letters = "1010101010101010";
             letters = letters.split("");
-
             var fontSize = 16;
             var columns = canvas.width / fontSize;
             var drops = [];
 
-            for (var i = 0; i < columns; i++) {
-                drops[i] = 1;
-            }
+            for (var i = 0; i < columns; i++) drops[i] = 1;
 
-            function draw() {
-                ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            return setInterval(function() {
+                ctx.fillStyle = "rgba(5, 8, 12, 0.08)";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                ctx.fillStyle = "#00e676"; // اللون الأخضر
+                ctx.fillStyle = "#00e676";
                 ctx.font = fontSize + "px monospace";
 
                 for (var i = 0; i < drops.length; i++) {
                     var text = letters[Math.floor(Math.random() * letters.length)];
                     ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                        drops[i] = 0;
-                    }
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
                     drops[i]++;
                 }
+            }, speed);
+        }
+
+        // تشغيل الخلفية
+        createMatrixBg("bgCanvas", 50);
+
+        // التحقق من المفتاح والكلمة
+        function checkAccess() {
+            var code = document.getElementById("vipCode").value;
+            var pass = document.getElementById("vipPass").value;
+            var error = document.getElementById("errorMsg");
+
+            if (code === "SPAM-VIP" && pass === "SFIN7474") {
+                error.style.display = "none";
+                document.getElementById("loginOverlay").style.display = "none";
+                
+                // شاشة سقوط الأرقام الخضراء المباشرة
+                var transCanvas = document.getElementById("matrixTransition");
+                transCanvas.style.display = "block";
+                var transInterval = createMatrixBg("matrixTransition", 25);
+
+                // الانتقال إلى التطبيقات بعد 3 ثوانٍ
+                setTimeout(function() {
+                    clearInterval(transInterval);
+                    transCanvas.style.display = "none";
+                    document.getElementById("vipContent").style.display = "block";
+                }, 3000);
+
+            } else {
+                error.style.display = "block";
             }
-
-            var interval = setInterval(draw, 33);
-
-            // بعد 3 ثوانٍ كتسالي الأنيميشن وتبان التطبيقات
-            setTimeout(function() {
-                clearInterval(interval);
-                canvas.style.display = "none";
-                document.getElementById("vipContent").style.display = "block";
-            }, 3000);
         }
     </script>
 </body>
-</html>
-
+</html>   
