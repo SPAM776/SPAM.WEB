@@ -3,152 +3,270 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر التطبيقات - SPAM.WEB</title>
+    <title>قسم التطبيقات | SPAM.WEB</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
-        body { background-color: #0d0f12; color: #ffffff; padding: 20px 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-        .header { width: 100%; max-width: 500px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid #1f2937; padding-bottom: 12px; }
-        .back-btn { color: #00e676; text-decoration: none; font-weight: bold; font-size: 0.9rem; }
-        h1 { color: #00e676; font-size: 1.4rem; }
-        
-        .apps-container { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 15px; }
-        .app-card { background: #161b22; border-radius: 12px; border: 1px solid #30363d; padding: 15px; display: flex; flex-direction: column; gap: 12px; }
-        .app-info { display: flex; align-items: center; gap: 12px; }
-        .app-icon { width: 55px; height: 55px; border-radius: 12px; border: 2px solid #00e676; object-fit: cover; }
-        .app-details h3 { font-size: 1.1rem; color: #fff; margin-bottom: 4px; }
-        .app-details p { font-size: 0.8rem; color: #8b949e; }
-        .app-stats { display: flex; gap: 10px; font-size: 0.75rem; color: #00e676; margin-top: 4px; }
-        
-        .btn-download { display: block; width: 100%; padding: 10px 0; background: #00e676; color: #000; font-weight: bold; text-align: center; text-decoration: none; border-radius: 8px; font-size: 0.9rem; border: none; cursor: pointer; }
-        
-        /* Modal Window */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 1000; padding: 15px; }
-        .modal-box { background: #161b22; border: 1px solid #00e676; border-radius: 12px; padding: 20px; text-align: center; width: 100%; max-width: 360px; box-shadow: 0 0 15px rgba(0,230,118,0.2); }
-        .spinner { width: 40px; height: 40px; border: 4px solid #30363d; border-top: 4px solid #00e676; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 15px; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .countdown-text { color: #8b949e; font-size: 0.85rem; margin-bottom: 8px; }
-        .countdown-number { color: #00e676; font-size: 1.2rem; font-weight: bold; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        body { 
+            background-color: #0d0f12; 
+            color: #ffffff; 
+            padding: 20px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #1f2937;
+            padding-bottom: 12px;
+        }
+        .back-btn {
+            color: #00e676;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        h1 {
+            color: #00e676;
+            font-size: 1.4rem;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .app-card { 
+            background: #161b22; 
+            padding: 15px; 
+            border-radius: 12px; 
+            border: 1px solid #30363d; 
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .app-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .app-icon {
+            width: 65px;
+            height: 65px;
+            border-radius: 14px;
+            object-fit: cover;
+            border: 2px solid #00e676;
+        }
+        .app-details h3 {
+            color: #fff;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+        .app-details p {
+            color: #8b949e;
+            font-size: 0.8rem;
+        }
+        .app-stats {
+            display: flex;
+            gap: 12px;
+            color: #00e676;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        .btn-download { 
+            display: block; 
+            width: 100%;
+            text-align: center;
+            padding: 11px 0; 
+            background: #00e676; 
+            color: #000; 
+            font-weight: bold; 
+            text-decoration: none; 
+            border-radius: 8px; 
+            font-size: 0.95rem;
+            cursor: pointer;
+            border: none;
+        }
+
+        /* نافذة الانتظار */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-box {
+            background: #161b22;
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid #00e676;
+            text-align: center;
+            width: 85%;
+            max-width: 320px;
+            box-shadow: 0 0 20px rgba(0, 230, 118, 0.2);
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #21262d;
+            border-top: 5px solid #00e676;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .countdown-text {
+            font-size: 1rem;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .countdown-number {
+            color: #00e676;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h1>📲 قائمة التطبيقات</h1>
+        <h1>📱 قائمة التطبيقات</h1>
         <a href="index.html" class="back-btn">← الرئيسية</a>
     </div>
 
-    <div class="apps-container">
-
-        <!-- 1. MT MANAGER -->
+    <div class="container">
+        <!-- 1. SKIN TOOLS PRO V2 -->
         <div class="app-card">
             <div class="app-info">
-                <img src="1234.png" alt="MT Manager" class="app-icon">
+                <img src="3079.png" alt="Skin Tools Pro" class="app-icon">
                 <div class="app-details">
-                    <h3>MT MANAGER</h3>
-                    <p>الحجم: 18MB</p>
+                    <h3>SKIN TOOLS PRO V2</h3>
+                    <p>الحجم: 52 MB</p>
                     <div class="app-stats">
                         <span>★ 4.8</span>
-                        <span>📥 +25K</span>
-                    </div>
-                </div>
-            </div>
-            <button class="btn-download" onclick="startDownload('https://www.mediafire.com/file/ex20xshylq6xyt6/MT_VIP_2.16.2.apk/file')">تحديث وتحميل التطبيق</button>
-        </div>
-
-        <!-- 2. NP MANAGER -->
-        <div class="app-card">
-            <div class="app-info">
-                <img src="555.png" alt="NP Manager" class="app-icon">
-                <div class="app-details">
-                    <h3>NP MANAGER</h3>
-                    <p>الحجم: 22MB</p>
-                    <div class="app-stats">
-                        <span>★ 4.7</span>
-                        <span>📥 +18K</span>
-                    </div>
-                </div>
-            </div>
-            <button class="btn-download" onclick="startDownload('https://www.mediafire.com/file/ex20xshylq6xyt6/MT_VIP_2.16.2.apk/file')">تحديث وتحميل التطبيق</button>
-        </div>
-
-        <!-- 3. ACODE -->
-        <div class="app-card">
-            <div class="app-info">
-                <img src="666.png" alt="Acode" class="app-icon">
-                <div class="app-details">
-                    <h3>ACODE PRO</h3>
-                    <p>الحجم: 14MB</p>
-                    <div class="app-stats">
-                        <span>★ 4.9</span>
-                        <span>📥 +30K</span>
-                    </div>
-                </div>
-            </div>
-            <button class="btn-download" onclick="startDownload('https://www.mediafire.com/file/20lfx8llsp6fip1/Acode.apk/file')">تحديث وتحميل التطبيق</button>
-        </div>
-
-        <!-- 4. TERMUX -->
-        <div class="app-card">
-            <div class="app-info">
-                <img src="1.png" alt="Termux" class="app-icon">
-                <div class="app-details">
-                    <h3>TERMUX</h3>
-                    <p>الحجم: 97MB</p>
-                    <div class="app-stats">
-                        <span>★ 4.9</span>
-                        <span>📥 +50K</span>
-                    </div>
-                </div>
-            </div>
-            <button class="btn-download" onclick="startDownload('https://www.mediafire.com/file/ez96fghj259dph7/Termux.apk/file')">تحديث وتحميل التطبيق</button>
-        </div>
-
-        <!-- 5. APK EDITOR -->
-        <div class="app-card">
-            <div class="app-info">
-                <img src="777.png" alt="APK Editor" class="app-icon">
-                <div class="app-details">
-                    <h3>APK EDITOR PRO</h3>
-                    <p>الحجم: 12MB</p>
-                    <div class="app-stats">
-                        <span>★ 4.6</span>
-                        <span>📥 +14K</span>
-                    </div>
-                </div>
-            </div>
-            <button class="btn-download" onclick="startDownload('https://www.mediafire.com/file/ex20xshylq6xyt6/MT_VIP_2.16.2.apk/file')">تحديث وتحميل التطبيق</button>
-        </div>
-
-        <!-- 6. ZARCHIVER -->
-        <div class="app-card">
-            <div class="app-info">
-                <img src="888.png" alt="ZArchiver" class="app-icon">
-                <div class="app-details">
-                    <h3>ZARCHIVER PRO</h3>
-                    <p>الحجم: 5MB</p>
-                    <div class="app-stats">
-                        <span>★ 4.8</span>
-                        <span>📥 +40K</span>
-                    </div>
-                </div>
-            </div>
-            <button class="btn-download" onclick="startDownload('https://www.mediafire.com/file/ex20xshylq6xyt6/MT_VIP_2.16.2.apk/file')">تحديث وتحميل التطبيق</button>
-        </div>
-
-        <!-- 7. NVS APP -->
-        <div class="app-card">
-            <div class="app-info">
-                <img src="999.png" alt="NVS App" class="app-icon">
-                <div class="app-details">
-                    <h3>NVS TOOL</h3>
-                    <p>الحجم: 8MB</p>
-                    <div class="app-stats">
-                        <span>★ 4.5</span>
                         <span>📥 +10K</span>
                     </div>
                 </div>
             </div>
-            <button class="btn-download" onclick="startDownload('https://www.mediafire.com/file/e8o4gssssff11e/NPSApp.apk/file')">تحديث وتحميل التطبيق</button>
+            <button class="btn-download" onclick="startDownload('https://www.mediafire.com/file/68jvru5zaaj9rha/com.vcm21.SkinToolsConfigFF-2-0-4-arm64-v8a-android60.apk/file')">تحميل APK</button>
+        </div>
+
+        <!-- 2. DARK AURA -->
+        <div class="app-card">
+            <div class="app-info">
+                <img src="3078.webp" alt="Dark Aura" class="app-icon">
+                <div class="app-details">
+                    <h3>DARK AURA</h3>
+                    <p>الحجم: 10 MB</p>
+                    <div class="app-stats">
+                        <span>★ 4.9</span>
+                        <span>📥 +5K</span>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-download" onclick="startDownload('https://www.mediafire.com/file/0yuet1p0ewolxxs/dark-aura-panel.apk/file')">تحميل APK</button>
+        </div>
+
+        <!-- 3. FREE FIRE SPAM -->
+        <div class="app-card">
+            <div class="app-info">
+                <img src="0000.webp" alt="FREE FIRE SPAM" class="app-icon" style="width: 70px; height: 70px; border-radius: 12px; object-fit: cover; flex-shrink: 0;">
+                <div class="app-details">
+                    <h3>FREE FIRE SPAM</h3>
+                    <p class="app-desc">فري فاير نسخ قديمه</p>
+                    <p>الحجم: 750 MB</p>
+                    <div class="app-stats">
+                        <span>★ 5.0</span>
+                        <span>📦 +1K</span>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-download" onclick="startDownload('https://www.mediafire.com/file/aramzmxbao4115c/SPAM-VIP_64bit.apk/file')">تحميل التطبيق</button>
+        </div>
+
+        <!-- 4. SHIZUKU -->
+        <div class="app-card">
+            <div class="app-info">
+                <img src="1212.png" alt="Shizuku" class="app-icon">
+                <div class="app-details">
+                    <h3>SHIZUKU</h3>
+                    <p>الحجم: 18 MB</p>
+                    <div class="app-stats">
+                        <span>★ 4.9</span>
+                        <span>📥 +8K</span>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-download" onclick="startDownload('https://www.mediafire.com/file/rnm1am3qb4oyx2m/Shizuku.apk/file')">تحميل APK</button>
+        </div>
+
+        <!-- 5. TELEGRAM -->
+        <div class="app-card">
+            <div class="app-info">
+                <img src="5555.png" alt="Telegram" class="app-icon">
+                <div class="app-details">
+                    <h3>TELEGRAM</h3>
+                    <p>الحجم: 68 MB</p>
+                    <div class="app-stats">
+                        <span>★ 4.8</span>
+                        <span>📥 +50K</span>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-download" onclick="startDownload('https://www.mediafire.com/file/wvko6tv4a7rs75e/Telegram.apk/file')">تحميل APK</button>
+        </div>
+
+        <!-- 6. MAGISK -->
+        <div class="app-card">
+            <div class="app-info">
+                <img src="6666.png" alt="Magisk" class="app-icon">
+                <div class="app-details">
+                    <h3>MAGISK</h3>
+                    <p>الحجم: 15 MB</p>
+                    <div class="app-stats">
+                        <span>★ 5.0</span>
+                        <span>📥 +20K</span>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-download" onclick="startDownload('https://www.mediafire.com/file/1g85qzoeznyc5fs/Magisk.apk/file')">تحميل APK</button>
+        </div>
+
+        <!-- 7. WPS APP -->
+        <div class="app-card">
+            <div class="app-info">
+                <img src="3333.png" alt="WPS APP" class="app-icon">
+                <div class="app-details">
+                    <h3>WPS APP</h3>
+                    <p>الحجم: 16 MB</p>
+                    <div class="app-stats">
+                        <span>★ 4.6</span>
+                        <span>📥 +15K</span>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-download" onclick="startDownload('https://www.mediafire.com/file/e8u4gwassffi11o/WPSApp.apk/file')">تحميل APK</button>
         </div>
 
         <!-- 8. WIFI MAP -->
@@ -157,14 +275,14 @@
                 <img src="2222.png" alt="WIFI MAP" class="app-icon">
                 <div class="app-details">
                     <h3>WIFI MAP</h3>
-                    <p>الحجم: 35MB</p>
+                    <p>الحجم: 95 MB</p>
                     <div class="app-stats">
                         <span>★ 4.7</span>
                         <span>📥 +12K</span>
                     </div>
                 </div>
             </div>
-            <button class="btn-download" onclick="startDownload('https://www.mediafire.com/file/raflz5o1vfgh284/Wifi-Map.apk/file')">تحديث وتحميل التطبيق</button>
+            <button class="btn-download" onclick="startDownload('https://www.mediafire.com/file/raflz5ofvfgh384/WiFi+Map.apk/file')">تحميل APK</button>
         </div>
 
         <!-- 9. TERMUX COMMANDS -->
@@ -172,15 +290,15 @@
             <div class="app-info">
                 <img src="1.png" alt="Termux Commands" class="app-icon">
                 <div class="app-details">
-                    <h3>TERMUX-CODES</h3>
-                    <p>الحجم: 4MB</p>
+                    <h3>أوامر ترمكس</h3>
+                    <p>الحجم: 64 MB</p>
                     <div class="app-stats">
                         <span>★ 4.9</span>
                         <span>📥 +7K</span>
                     </div>
                 </div>
             </div>
-            <button class="btn-download" onclick="startDownload('https://www.mediafire.com/file/oaz2xumed6bdprc/Termux_Tool.apk/file')">تحديث وتحميل التطبيق</button>
+            <button class="btn-download" onclick="startDownload('https://www.mediafire.com/file/oav2xumxd5bdprc/Termux_Tools_and_Commands.apk/file')">تحميل APK</button>
         </div>
 
         <!-- 10. LEARN TERMUX -->
@@ -189,30 +307,22 @@
                 <img src="4444.png" alt="Learn Termux" class="app-icon">
                 <div class="app-details">
                     <h3>LEARN TERMUX</h3>
-                    <p>الحجم: 5MB</p>
+                    <p>الحجم: 15 MB</p>
                     <div class="app-stats">
                         <span>★ 4.8</span>
                         <span>📥 +6K</span>
                     </div>
                 </div>
             </div>
-            <button class="btn-download" onclick="startDownload('https://www.mediafire.com/file/dj7cdf0ffsttzd/Learn_Termux.apk/file')">تحديث وتحميل التطبيق</button>
+            <button class="btn-download" onclick="startDownload('https://www.mediafire.com/file/dj7cdfde8fstezd/Learn_Termux.apk/file')">تحميل APK</button>
         </div>
 
     </div>
 
-    <!-- نافذة الانتظار الإعلانية -->
     <div class="modal-overlay" id="downloadModal">
         <div class="modal-box">
             <div class="spinner"></div>
             <p class="countdown-text">جاري فحص الملف وتجهيز الرابط...</p>
-
-            <!-- 💰 منطقة الإعلان 💰 -->
-            <div class="ad-area" style="margin: 12px 0; min-height: 100px; background: #0d0f12; border-radius: 8px; padding: 5px; border: 1px dashed #00e676; display: flex; justify-content: center; align-items: center;">
-                <script async="async" data-cfasync="false" src="//pl21151086.profitablecpmnetwork.com/8ddb5471c114c257a75fcf759da7fdd4/invoke.js"></script>
-                <div id="container-8ddb5471c114c257a75fcf759da7fdd4"></div>
-            </div>
-
             <p class="countdown-text">يرجى الانتظار: <span class="countdown-number" id="timer">10</span> ثانية</p>
         </div>
     </div>
@@ -238,6 +348,7 @@
             }, 1000);
         }
     </script>
+
 </body>
-                </html>
-    
+    </html>
+                    
