@@ -20,7 +20,6 @@
             overflow-x: hidden;
         }
 
-        /* خلفية الأرقام الخضراء النازلة (Matrix Effect) */
         #bgCanvas {
             position: fixed;
             top: 0;
@@ -31,7 +30,6 @@
             opacity: 0.25;
         }
 
-        /* واجهة الدخول الاحترافية */
         .login-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -96,10 +94,6 @@
             transition: 0.3s;
         }
 
-        .login-input:focus {
-            box-shadow: 0 0 10px rgba(0, 230, 118, 0.4);
-        }
-
         .login-btn {
             width: 100%;
             padding: 14px;
@@ -127,7 +121,6 @@
             display: none;
         }
 
-        /* شاشة التحول الكامل للأرقام الخضراء عند نجاح الكود */
         #matrixTransition {
             position: fixed;
             top: 0; left: 0;
@@ -137,21 +130,44 @@
             display: none;
         }
 
-        /* المحتوى المفتوح */
         #vipContent {
             position: relative;
             z-index: 5;
             display: none;
             padding: 20px 10px;
         }
+
+        /* نافذة التحميل الإعلانية */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            z-index: 999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .modal-box {
+            background: #0d1117;
+            border: 1.5px solid #00e676;
+            padding: 25px 20px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 380px;
+            text-align: center;
+            box-shadow: 0 0 25px rgba(0, 230, 118, 0.3);
+        }
     </style>
 </head>
 <body>
 
-    <!-- خلفية الأرقام المتساقطة الخفيفة -->
     <canvas id="bgCanvas"></canvas>
 
-    <!-- 1. واجهة تسجيل الدخول والرمز السري -->
+    <!-- واجهة تسجيل الدخول -->
     <div class="login-overlay" id="loginOverlay">
         <div class="login-box">
             <h2>الوصول إلى النظام</h2>
@@ -172,27 +188,19 @@
         </div>
     </div>
 
-    <!-- 2. شاشة الانتقال (تأثير سقوط الأرقام الخضراء 101010) -->
+    <!-- شاشة الانتقال Matrix -->
     <canvas id="matrixTransition"></canvas>
 
-    <!-- 3. قسم التطبيقات والألعاب المهكرة -->
+    <!-- المحتوى والبطاقات -->
     <div id="vipContent">
         <header style="text-align: center; margin-bottom: 25px;">
-            <h1 style="color: #00e676; text-shadow: 0 0 10px rgba(0,230,118,0.5);">🎮 ألعاب وتطبيقات وملفات مهكرة VIP</h1>
-            <p style="color: #8b949e;">جميع الألعاب والتطبيقات وملفات مهكرة ومفحوصة 100%</p>
+            <h1 style="color: #00e676; text-shadow: 0 0 10px rgba(0,230,118,0.5);">🎮 ألعاب وتطبيقات مهكرة VIP</h1>
+            <p style="color: #8b949e;">جميع الألعاب والتطبيقات مهكرة ومفحوصة 100%</p>
         </header>
 
         <div class="container" style="max-width: 500px; margin: auto;">
 
-            <!-- تطبيق رقم 1 -->
-            <div class="card" style="background: rgba(18,20,28,0.9); border: 1px solid #00e676; padding: 20px; border-radius: 12px; margin-bottom: 15px; text-align: center;">
-                <img src="XXXXXX.png" alt="Icon" style="width: 70px; height: 70px; border-radius: 12px; margin-bottom: 10px;">
-                <h3 style="color: #fff; margin-bottom: 5px;">XXXXXX</h3>
-                <p style="color: #8b949e; font-size: 0.9rem; margin-bottom: 15px;">الحجم: XX MB | مهكرة بالكامل</p>
-                <button class="login-btn" onclick="openDownloadModal('رابط')">تحميل التطبيق</button>
-            </div>
-
-                        <!-- تطبيق رقم 1 -->
+            <!-- تطبيق رقم 1: FREE FIRE SPAM -->
             <div class="card" style="background: rgba(18,20,28,0.9); border: 1px solid #00e676; padding: 20px; border-radius: 12px; margin-bottom: 15px; text-align: center;">
                 <img src="0000.webp" alt="FREE FIRE SPAM" style="width: 70px; height: 70px; border-radius: 12px; margin-bottom: 10px; object-fit: cover;">
                 <h3 style="color: #fff; margin-bottom: 5px;">FREE FIRE SPAM</h3>
@@ -200,41 +208,27 @@
                 <p style="color: #8b949e; font-size: 0.9rem; margin-bottom: 15px;">الحجم: 750 MB | ★ 5.0 | 📦 +1K</p>
                 <button class="login-btn" onclick="openDownloadModal('https://www.mediafire.com/file/aramzmxbao4115c/SPAM-VIP_64bit.apk/file')">تحميل التطبيق</button>
             </div>
-            
-            <!-- تطبيق رقم 2 -->
-            <div class="card" style="background: rgba(18,20,28,0.9); border: 1px solid #00e676; padding: 20px; border-radius: 12px; margin-bottom: 15px; text-align: center;">
-                <img src="XXXXXX.png" alt="Icon" style="width: 70px; height: 70px; border-radius: 12px; margin-bottom: 10px;">
-                <h3 style="color: #fff; margin-bottom: 5px;">XXXXXX</h3>
-                <p style="color: #8b949e; font-size: 0.9rem; margin-bottom: 15px;">الحجم: XX MB | مهكرة بالكامل</p>
-                <button class="login-btn" onclick="openDownloadModal('رابط')">تحميل التطبيق</button>
-            </div>
-
-            <!-- تطبيق رقم 3 -->
-            <div class="card" style="background: rgba(18,20,28,0.9); border: 1px solid #00e676; padding: 20px; border-radius: 12px; margin-bottom: 15px; text-align: center;">
-                <img src="XXXXXX.png" alt="Icon" style="width: 70px; height: 70px; border-radius: 12px; margin-bottom: 10px;">
-                <h3 style="color: #fff; margin-bottom: 5px;">XXXXXX</h3>
-                <p style="color: #8b949e; font-size: 0.9rem; margin-bottom: 15px;">الحجم: XX MB | مهكرة بالكامل</p>
-                <button class="login-btn" onclick="openDownloadModal('رابط')">تحميل التطبيق</button>
-            </div>
 
         </div>
     </div>
 
-    <!-- نافذة الإعلان والتحميل -->
+    <!-- نافذة الإعلان والعد التنازلي للتحميل -->
     <div class="modal-overlay" id="downloadModal" style="display:none;">
-        <div class="modal-box" style="background:#12141c; border:1px solid #00e676; padding:20px; border-radius:12px; text-align:center;">
-            <p style="color:#00e676;">جاري تحضير رابط التحميل المباشر...</p>
+        <div class="modal-box">
+            <h3 style="color:#00e676; margin-bottom: 10px;">جاري تجهيز رابط التحميل...</h3>
+            <p style="color:#8b949e; font-size: 0.85rem; margin-bottom: 15px;">سيتم توجيهك إلى رابط التحميل المباشر تلقائياً</p>
+            
             <div class="ad-area" style="margin:15px 0;">
                 <script async="async" data-cfasync="false" src="https://pl21151086.profitablecpmnetwork.com/8ddb5471c114c257a75fcf759da7fdd4/invoke.js"></script>
                 <div id="container-8ddb5471c114c257a75fcf759da7fdd4"></div>
             </div>
-            <p>يرجى الانتظار: <span id="timer" style="color:#00e676; font-weight:bold;">10</span> ثانية</p>
+
+            <p style="font-size: 1.1rem;">يرجى الانتظار: <span id="timer" style="color:#00e676; font-weight:bold;">10</span> ثانية</p>
+            
+            <button id="directBtn" class="login-btn" style="display:none; margin-top:15px;" onclick="goToDownload()">اضغط هنا للتحميل الآن 🚀</button>
         </div>
     </div>
 
-    <script src="script.js"></script>
-
-    <!-- سكريبت التأثير والتحقق -->
     <script>
         // أنيميشن Matrix للخلفية
         function createMatrixBg(canvasId, speed) {
@@ -266,10 +260,9 @@
             }, speed);
         }
 
-        // تشغيل الخلفية
         createMatrixBg("bgCanvas", 50);
 
-        // التحقق من المفتاح والكلمة
+        // التحقق من كود الدخول
         function checkAccess() {
             var code = document.getElementById("vipCode").value;
             var pass = document.getElementById("vipPass").value;
@@ -279,22 +272,54 @@
                 error.style.display = "none";
                 document.getElementById("loginOverlay").style.display = "none";
                 
-                // شاشة سقوط الأرقام الخضراء المباشرة
                 var transCanvas = document.getElementById("matrixTransition");
                 transCanvas.style.display = "block";
                 var transInterval = createMatrixBg("matrixTransition", 25);
 
-                // الانتقال إلى التطبيقات بعد 3 ثوانٍ
                 setTimeout(function() {
                     clearInterval(transInterval);
                     transCanvas.style.display = "none";
                     document.getElementById("vipContent").style.display = "block";
-                }, 3000);
+                }, 2500);
 
             } else {
                 error.style.display = "block";
             }
         }
+
+        // متغير لتخزين رابط التحميل الحالي
+        var currentDownloadUrl = "";
+
+        // دالة فتح نافذة التحميل والعد التنازلي
+        function openDownloadModal(url) {
+            currentDownloadUrl = url;
+            var modal = document.getElementById("downloadModal");
+            var timerSpan = document.getElementById("timer");
+            var directBtn = document.getElementById("directBtn");
+            
+            modal.style.display = "flex";
+            directBtn.style.display = "none";
+            
+            var timeLeft = 10;
+            timerSpan.textContent = timeLeft;
+
+            var countdown = setInterval(function() {
+                timeLeft--;
+                timerSpan.textContent = timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(countdown);
+                    directBtn.style.display = "block";
+                    window.location.href = currentDownloadUrl; // توجيه تلقائي لـ Mediafire
+                }
+            }, 1000);
+        }
+
+        function goToDownload() {
+            if (currentDownloadUrl) {
+                window.location.href = currentDownloadUrl;
+            }
+        }
     </script>
 </body>
-</html>   
+</html>
